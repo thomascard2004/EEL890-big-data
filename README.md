@@ -13,12 +13,13 @@ Este projeto simula a atuação do nosso grupo como uma empresa de consultoria d
 O objetivo da consultoria se divide em gerenciar o sistema transacional de UMA dessas empresas e construir uma solução de Data Warehouse (DW) integrado para a associação, visando a geração de Relatórios Gerenciais Globais e Dashboards unificados para tomada de decisão.
 
 ## 🎯 Escopo do Sistema
-Para evitar que a tarefa fique exaustiva, o escopo de integração foi restrito ao sistema de negócio central das empresas. Os conceitos principais do universo de discurso envolvidos são apenas cinco:
+Para evitar que a tarefa fique exaustiva, o escopo de integração foi restrito ao sistema de negócio central das empresas. Os conceitos principais do universo de discurso envolvidos são apenas seis:
 * Cliente 
 * Veículos (frota) 
 * Pátio 
 * Reservas 
 * Locações (aluguel) 
+* Seguros
 
 Foram deixados de fora os sistemas auxiliares como RH, Compras e Fornecedores.
 
