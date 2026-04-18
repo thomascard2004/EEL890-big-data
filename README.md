@@ -39,8 +39,7 @@ O banco de dados modela os seguintes subsistemas:
 
 ### 📦 Entregáveis (Primeira Parte)
 Os artefatos produzidos nesta etapa incluem:
-* `documentacao.pdf`: Um texto com toda a descrição do Projeto do Banco de Dados Relacional, contendo os detalhes necessários para a justificação dos scripts SQL de Extração ETL.
-* `dicionario_dados`: Dicionário de Dados do Modelo, contendo as especificações detalhadas das Restrições de Integridade.
+* `documentacao.pdf`: Um texto com toda a descrição do Projeto do Banco de Dados Relacional, contendo os detalhes necessários para a justificação dos scripts SQL de Extração ETL. Contém também o Dicionário de Dados do Modelo, contendo as especificações detalhadas das Restrições de Integridade.
 * `modelo_conceitual`: Uma figura representando o Modelo Conceitual (MER / MOO/UML).
 * `modelo_logico`: O esquema diagramado do Modelo Lógico.
 * `script_ddl.sql`: O script SQL/DDL completo do Modelo Físico, construído utilizando o padrão ANSI SQL a partir do SQL99 (SQL3).
@@ -64,5 +63,3 @@ A única análise preditiva modelada será a **previsão de ocupação de pátio
 1. Clone este repositório: `git clone <URL_DO_REPOSITORIO>`
 2. Abra seu SGBD preferido compatível com ANSI SQL (ex: PostgreSQL, MySQL).
 3. Execute o arquivo `script_ddl.sql` para construir as tabelas físicas e as restrições de integridade da Parte 1.
-
-*Aviso: TODOS os arquivos (PDF e scripts SQL) devem conter um "cabeçalho" (folha de rosto) com a identificação clara do grupo (nomes e DRE), sob pena de não serem considerados na avaliação*.
