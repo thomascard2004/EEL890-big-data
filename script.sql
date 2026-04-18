@@ -1,3 +1,7 @@
+-- Thomas Cardoso de Miranda DRE 122050797
+-- Thiago Moutinho de Carvalho Maksoud DRE 119048139
+-- Yan Lukas Willian Tavares DRE 124341835
+
 -- 1. Criação da Tabela de Pátios
 -- Representa os pátios compartilhados entre as 6 empresas.
 CREATE TABLE Patio (
