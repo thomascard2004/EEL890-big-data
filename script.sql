@@ -3,16 +3,14 @@
 -- Yan Lukas Willian Tavares DRE 124341835
 
 -- 1. Criação da Tabela de Pátios
--- Representa os pátios compartilhados entre as 6 empresas.
 CREATE TABLE Patio (
     ID_Patio INT PRIMARY KEY,
-    Nome_Localizacao VARCHAR(100) NOT NULL, -- Ex: Galeão, Santos Dumont, etc.
+    Nome_Localizacao VARCHAR(100) NOT NULL,
     Capacidade_Vagas INT NOT NULL,
     Empresa_Dona VARCHAR(100) NOT NULL
 );
 
 -- 2. Criação da Tabela de Grupos/Categorias de Veículos
--- Classificação para resumir classe de luxo e valor da diária.
 CREATE TABLE Grupo_Veiculo (
     ID_Grupo INT PRIMARY KEY,
     Nome_Categoria VARCHAR(50) NOT NULL,
@@ -21,7 +19,6 @@ CREATE TABLE Grupo_Veiculo (
 );
 
 -- 3. Criação da Tabela de Veículos (Frota)
--- Contém dados técnicos e características para nortear a escolha do cliente.
 CREATE TABLE Veiculo (
     ID_Veiculo INT PRIMARY KEY,
     ID_Grupo INT NOT NULL,
@@ -31,7 +28,7 @@ CREATE TABLE Veiculo (
     Modelo VARCHAR(50) NOT NULL,
     Cor VARCHAR(30) NOT NULL,
     Ar_Condicionado BOOLEAN NOT NULL,
-    Mecanizacao VARCHAR(20) NOT NULL, -- Manual ou Automática
+    Mecanizacao VARCHAR(20) NOT NULL,
     Cadeirinha_Crianca BOOLEAN DEFAULT FALSE,
     Bebe_Conforto BOOLEAN DEFAULT FALSE,
     Dimensoes VARCHAR(100),
@@ -40,7 +37,6 @@ CREATE TABLE Veiculo (
 );
 
 -- 4. Criação da Tabela de Prontuário do Veículo
--- Acompanha estado de conservação, rodagem e segurança.
 CREATE TABLE Prontuario_Veiculo (
     ID_Prontuario INT PRIMARY KEY,
     ID_Veiculo INT NOT NULL,
@@ -53,20 +49,18 @@ CREATE TABLE Prontuario_Veiculo (
 );
 
 -- 5. Criação da Tabela de Fotos do Veículo
--- Armazena fotos para propaganda ou estado de entrega/devolução.
 CREATE TABLE Foto_Veiculo (
     ID_Foto INT PRIMARY KEY,
     ID_Veiculo INT NOT NULL,
     URL_Foto VARCHAR(255) NOT NULL,
-    Tipo_Foto VARCHAR(50), -- Propaganda, Entrega, Devolucao
+    Tipo_Foto VARCHAR(50),
     FOREIGN KEY (ID_Veiculo) REFERENCES Veiculo(ID_Veiculo)
 );
 
 -- 6. Criação da Tabela de Clientes
--- Pode ser PF ou PJ. Contempla dados para cobrança.
 CREATE TABLE Cliente (
     ID_Cliente INT PRIMARY KEY,
-    Tipo_Cliente CHAR(2) NOT NULL, -- 'PF' ou 'PJ'
+    Tipo_Cliente CHAR(2) NOT NULL,
     Nome_Razao_Social VARCHAR(150) NOT NULL,
     CPF_CNPJ VARCHAR(20) UNIQUE NOT NULL,
     Endereco_Completo TEXT,
@@ -74,7 +68,6 @@ CREATE TABLE Cliente (
 );
 
 -- 7. Criação da Tabela de Motoristas (Condutores)
--- Individualiza os condutores associados ao cliente.
 CREATE TABLE Motorista (
     ID_Motorista INT PRIMARY KEY,
     ID_Cliente INT NOT NULL,
@@ -86,12 +79,11 @@ CREATE TABLE Motorista (
 );
 
 -- 8. Criação da Tabela de Reservas
--- Controla a intenção de locação dentro de uma janela de tempo.
 CREATE TABLE Reserva (
     ID_Reserva INT PRIMARY KEY,
     ID_Cliente INT NOT NULL,
-    ID_Grupo INT, -- Pode reservar apenas a categoria
-    ID_Veiculo_Especifico INT, -- Ou um veículo específico da fila de espera
+    ID_Grupo INT,
+    ID_Veiculo_Especifico INT,
     ID_Patio_Retirada INT NOT NULL,
     Data_Hora_Solicitacao TIMESTAMP NOT NULL,
     Data_Hora_Retirada_Prevista TIMESTAMP NOT NULL,
@@ -103,11 +95,17 @@ CREATE TABLE Reserva (
     FOREIGN KEY (ID_Patio_Retirada) REFERENCES Patio(ID_Patio)
 );
 
--- 9. Criação da Tabela de Locação
--- Efetivação do aluguel, abrangendo retiradas, devoluções, seguros e cobrança.
+-- 9. Catálogo de Seguros
+CREATE TABLE Seguro_Protecao (
+    ID_Seguro INT PRIMARY KEY,
+    Descricao VARCHAR(100) NOT NULL,
+    Valor_Diario DECIMAL(10, 2) NOT NULL
+);
+
+-- 10. Criação da Tabela de Locação
 CREATE TABLE Locacao (
     ID_Locacao INT PRIMARY KEY,
-    ID_Reserva INT, -- A locação pode vir de uma reserva
+    ID_Reserva INT,
     ID_Motorista INT NOT NULL,
     ID_Veiculo INT NOT NULL,
     ID_Patio_Saida INT NOT NULL,
@@ -118,14 +116,21 @@ CREATE TABLE Locacao (
     Data_Hora_Devolucao_Realizada TIMESTAMP,
     Estado_Veiculo_Entrega TEXT,
     Estado_Veiculo_Devolucao TEXT,
-    Protecao_Vidros_Farois BOOLEAN DEFAULT FALSE,
-    Faixa_Indenizacao_Maior BOOLEAN DEFAULT FALSE,
     Valor_Inicial DECIMAL(10, 2),
-    Valor_Final DECIMAL(10, 2), -- Ajustado com multas, seguros ou atrasos
+    Valor_Final DECIMAL(10, 2),
     FOREIGN KEY (ID_Reserva) REFERENCES Reserva(ID_Reserva),
     FOREIGN KEY (ID_Motorista) REFERENCES Motorista(ID_Motorista),
     FOREIGN KEY (ID_Veiculo) REFERENCES Veiculo(ID_Veiculo),
     FOREIGN KEY (ID_Patio_Saida) REFERENCES Patio(ID_Patio),
     FOREIGN KEY (ID_Patio_Chegada_Prevista) REFERENCES Patio(ID_Patio),
     FOREIGN KEY (ID_Patio_Chegada_Realizada) REFERENCES Patio(ID_Patio)
+);
+
+-- 11. Tabela Associativa Locacao_Seguro
+CREATE TABLE Locacao_Seguro (
+    ID_Locacao INT NOT NULL,
+    ID_Seguro INT NOT NULL,
+    PRIMARY KEY (ID_Locacao, ID_Seguro),
+    FOREIGN KEY (ID_Locacao) REFERENCES Locacao(ID_Locacao),
+    FOREIGN KEY (ID_Seguro) REFERENCES Seguro_Protecao(ID_Seguro)
 );
