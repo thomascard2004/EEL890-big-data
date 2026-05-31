@@ -1,0 +1,12 @@
+# Dados persistidos do Docker
+postgres_dwh_data/
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Backups e zips
+*.zip
+*.bak
